@@ -24,7 +24,7 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.74118965"
-     inkscape:cx="337.29559"
+     inkscape:cx="329.87509"
      inkscape:cy="298.84389"
      inkscape:window-width="1920"
      inkscape:window-height="1017"
@@ -85,7 +85,10 @@
      transform="translate(-18.360953,-105.21155)">
     <g
        id="g1049"
-       transform="translate(-9.9951926,-19.990385)">
+       transform="translate(-9.9951926,-19.990385)"
+       inkscape:export-filename="C:\Users\tguil\My Drive\PostDoc\timeOrderingSPDC\final data and analysis code\SPDC_GroupDelay\setup.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300">
       <rect
          style="fill:#a4a4a4;fill-opacity:1;stroke:none;stroke-width:0.499999;stroke-dasharray:0.499999, 0.499999"
          id="rect43452"
