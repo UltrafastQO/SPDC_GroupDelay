@@ -2,7 +2,7 @@
 
 Analysis code and raw data for the paper: [Gain-induced group delay in spontaneous parametric down-conversion](https://arxiv.org/abs/2405.07909)
 
-Requires packages numpy, scipy, matplotlib, tqdm, lmfit, strawberryfields, thewalrus, NeedALight, seaborn
+Requires packages numpy, scipy, matplotlib, tqdm, lmfit, strawberryfields, thewalrus, [NeedALight](https://github.com/polyquantique/NeedALight), seaborn
 
 ## Raw data structure
 
