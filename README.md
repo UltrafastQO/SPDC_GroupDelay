@@ -1,6 +1,6 @@
 # SPDC_GroupDelay
 
-Analysis code and raw data for the paper https://arxiv.org/abs/2405.07909
+Analysis code and raw data for the paper: [Gain-induced group delay in spontaneous parametric down-conversion](https://arxiv.org/abs/2405.07909)
 
 Requires packages numpy, scipy, matplotlib, tqdm, lmfit, strawberryfields, thewalrus, NeedALight, seaborn
 
@@ -8,7 +8,9 @@ Requires packages numpy, scipy, matplotlib, tqdm, lmfit, strawberryfields, thewa
 
 The data recorded from the TimeTagger is saved in the folder data.zip. A rough schematic of the setup is shown below:
 
-<img src="setup.svg"/>
+<img src="setup.png"/>
+
+The detector is a two-element (i.e. two multiplexed) superconducting nanowire single photon detector.
 
 The pump power is varied by rotating half-wave plate 1 (HWP1), while HWP2 alternates between: (i) HWP2=2.0 deg, splitting signal and idler at the polarizing beam spliter (PBS), or (ii) HWP2=24.5 deg, mixing signal and idler at the polarizing beam spliter. Interferograms are observed in the latter case.
 
