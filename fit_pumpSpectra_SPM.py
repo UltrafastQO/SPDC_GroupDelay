@@ -119,15 +119,15 @@ def fitPumpSpectraToSPMWithRealUnits(dataContainer, plot_on=False):
     
     def density(w, P):
         ''' P is the peak power in Watts'''
-        return P * np.exp(-((w) ** 2) / (2 * (sig_real) ** 2))    
+        return P * np.exp(-((w) ** 2) / (4 * (sig_real) ** 2))    
     
     #Defining gaussian pump pulse. Note that now this includes Np in definition
     def pump(w, P):
-        return np.sqrt(P)*np.exp(-((w) ** 2) / (4 * (sig_real) ** 2)) / np.power(np.pi * (sig_real ** 2), 1 / 4)
+        return np.sqrt(P)*np.exp(-((w) ** 2) / (2 * (sig_real) ** 2)) / np.power(np.pi * (sig_real) ** 2, 1 / 4)
     
     def theorySPM(w, spm, bg):
     
-        pumpz = lambda x: expm( 1j * (spm * dw / vp_Real ** 2) * (x-domain[0]) * density(-w +w[:,np.newaxis], P))@pump(w, P)
+        pumpz = lambda x: expm( 1j * (abs(spm) * dw / vp_Real **2 ) * (x-domain[0]) * density(-w +w[:,np.newaxis], P))@pump(w, P)
         z=l/2  #position of interest, chosen et end of region.
 
         theorySpectrum = abs(pumpz(z)**2)
@@ -170,7 +170,7 @@ def fitPumpSpectraToSPMWithRealUnits(dataContainer, plot_on=False):
         axes = axes.ravel()[:N]
     
     #Unpoled domain
-    l=1 # length 
+    l=1.0 # length 
     dz=l/10
     domain = np.arange(-l/2,l/2,dz)    
     
@@ -194,17 +194,18 @@ def fitPumpSpectraToSPMWithRealUnits(dataContainer, plot_on=False):
         end_idx = np.argmin(abs(w-w0+10*sig_real))        
         
         w = w[start_idx:end_idx] - w0 # normalized freq array
+        
+        
         # do fitting
 
-        
         expSpectrum = spectrum[start_idx:end_idx,k]
         expSpectrum = expSpectrum / np.max(expSpectrum)
         bg_guess = np.min(expSpectrum)                
         #Np_guess = 0.01
-        spm_guess = 3.51e-6
+        spm_guess = 1e-4
         
         P = pumpPowers_exp[k]
-        P = P / (133e-15*200e3) # convert to peak power (since exp meas is for an avg power, 200kHz // 133 fs)
+        P = P / (188e-15*200e3) # convert to peak power (since exp meas is for an avg power, 200kHz // 188 fs)
         
         popt, pcov = curve_fit(theorySPM, w, expSpectrum, p0=[spm_guess, bg_guess])
 
@@ -222,8 +223,6 @@ def fitPumpSpectraToSPMWithRealUnits(dataContainer, plot_on=False):
     # the fitting procedure is mostly insensitive to gamma spm
     fitted_spm_err = np.std(spms[:15])*1.95 # return 2 sigma error
     
-    gamma_spm = fitted_spm_value / (vp_Real**2 * 6.626e-34*f0)
-    gamma_spm_err = fitted_spm_err / (vp_Real**2 * 6.626e-34*f0)
     
     if plot_on:
         
@@ -232,7 +231,7 @@ def fitPumpSpectraToSPMWithRealUnits(dataContainer, plot_on=False):
         
         plt.show()
     
-    return gamma_spm, gamma_spm_err
+    return fitted_spm_value, fitted_spm_err
 
 
 ################################################################################
@@ -289,3 +288,4 @@ pumpPowers_exp = np.array([6.09043338e-02, 5.70571150e-02, 5.33185197e-02, 4.969
 ## Uncomment below to obtain spm parameter in physical units [W-1 m-1] ##
 
 gamma_spm, gamma_spm_err = fitPumpSpectraToSPMWithRealUnits(dataContainer, plot_on=True) 
+print(r'Found a self-phase modulation parameter {}({}) W-1 m-1'.format(gamma_spm,gamma_spm_err))
